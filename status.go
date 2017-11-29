@@ -44,7 +44,6 @@ func makeStatusHandler(node *goiw.Client, jobs map[string]*Job) func(http.Respon
 		w.WriteHeader(http.StatusOK)
 		w.Write(data)
 
-		go job.waitForSubmission() //start up the waitForSubmission function in a new goroutine so that it can run its own timer
 		log.Println("status response sent")
 	}
 }

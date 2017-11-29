@@ -17,15 +17,12 @@ type Job struct {
 
 //after a quote has been sent, wait until an order is submitted with the quote ID or until the quote expiration time passes
 func (j *Job) waitForSubmission() {
-	timer := time.NewTimer(j.QuoteExpireTime.Sub(time.Now()))
-
 	select {
-	case <-timer.C:
+	case <-time.After(j.QuoteExpireTime.Sub(time.Now())):
 		//quote timer expired
 		j.expireQuote()
 	case submission := <-j.JobSubmissionChan:
 		//job received
-		timer.Stop() //timer is no longer needed, so stop it
 		j.startJob(submission)
 	}
 }
