@@ -8,13 +8,19 @@ import (
 )
 
 const (
-	NodeAddress         = "http://192.168.2.52:14680"     //address of the IRI
-	QuoteDuration       = 30                              //how long a quote is good for in seconds
+	//NodeAddress         = "http://192.168.2.52:14680"     //address of the IRI
+	//QuoteDuration       = 30                              //how long a quote is good for in seconds
 	JavascriptISOString = "2006-01-02T15:04:05.999Z07:00" //for formatting time strings in a way that javascript likes
 )
 
+var (
+	params AppParams
+)
+
 func main() {
-	node := goiw.NewClient(NodeAddress)
+	params = readParams()
+
+	node := goiw.NewClient(params.NodeAddress)
 
 	if !nodeIsReady(node) {
 		log.Println("Node is not accessible or is not in sync")

@@ -18,7 +18,7 @@ func makeQuoteHandler(node *goiw.Client, jobs map[string]*Job) func(http.Respons
 			ID:                uuid.NewV4().String(),
 			Status:            "quoted",
 			Fee:               10000,
-			QuoteExpireTime:   time.Now().Add(QuoteDuration * time.Second),
+			QuoteExpireTime:   time.Now().Add(time.Duration(params.QuoteDuration) * time.Second),
 			JobSubmissionChan: make(chan JobSubmission),
 		}
 
